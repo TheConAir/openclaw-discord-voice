@@ -1,4 +1,4 @@
-# Discord Voice Bot
+# Openclaw to Discord Voice Bot
 
 A Discord bot that joins voice channels, transcribes speech via Whisper, processes through OpenClaw AI, and responds with synthesized speech via Kokoro TTS.
 
