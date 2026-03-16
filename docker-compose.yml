@@ -24,13 +24,14 @@ services:
 
   tts-service:
     build: ./tts-service
-    container_name: coqui-tts
+    container_name: kokoro-tts
     ports:
       - "8002:8002"
     environment:
-      - TTS_MODEL=coqui/vits
+      - KOKORO_VOICE=af_heart
+      - KOKORO_SPEED=1.15
       - TTS_DEVICE=cuda
-      - IDLE_TIMEOUT=300
+      - IDLE_TIMEOUT=0
       - PORT=8002
     deploy:
       resources:
