@@ -1,0 +1,2 @@
+faster-whisper[gpu]
+flask>=2.3.0

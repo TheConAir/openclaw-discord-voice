@@ -1,0 +1,36 @@
+# Environment
+.env
+*.env
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+venv/
+.venv/
+env/
+*.egg-info/
+dist/
+build/
+
+# Audio files
+*.wav
+*.mp3
+*.ogg
+*.flac
+
+# Logs
+*.log
+logs/
+
+# Models / weights
+*.pt
+*.pth
+*.bin
+*.onnx
+models/
+
+# OS
+.DS_Store
+Thumbs.db

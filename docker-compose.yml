@@ -1,0 +1,63 @@
+version: '3.8'
+
+services:
+  whisper-service:
+    build: ./whisper-service
+    container_name: whisper-stt
+    ports:
+      - "8001:8001"
+    environment:
+      - WHISPER_MODEL=small
+      - WHISPER_DEVICE=cuda
+      - IDLE_TIMEOUT=300
+      - PORT=8001
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    restart: unless-stopped
+    volumes:
+      - whisper-cache:/root/.cache
+
+  tts-service:
+    build: ./tts-service
+    container_name: coqui-tts
+    ports:
+      - "8002:8002"
+    environment:
+      - TTS_MODEL=coqui/vits
+      - TTS_DEVICE=cuda
+      - IDLE_TIMEOUT=300
+      - PORT=8002
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    restart: unless-stopped
+    volumes:
+      - tts-cache:/root/.cache
+
+  discord-bot:
+    build: ./discord-voice-bot
+    container_name: discord-voice-bot
+    ports:
+      - "8003:8003"
+    environment:
+      - DISCORD_BOT_TOKEN=${DISCORD_BOT_TOKEN}
+      - OPENCLAW_URL=http://host.docker.internal:18789
+      - WHISPER_URL=http://whisper-service:8001
+      - TTS_URL=http://tts-service:8002
+    depends_on:
+      - whisper-service
+      - tts-service
+    restart: unless-stopped
+
+volumes:
+  whisper-cache:
+  tts-cache:
